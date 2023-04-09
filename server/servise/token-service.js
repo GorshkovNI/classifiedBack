@@ -21,7 +21,7 @@ const TokenService = {
         }
     },
 
-    validateRefreshToken(){
+    validateRefreshToken(token){
         try{
             const isVerefied = jwt.verify(token, process.env.JWT_REFRESH_SECRET)
             return isVerefied
@@ -34,10 +34,12 @@ const TokenService = {
     async saveToken(userId, refreshToken){
         const result = await db.query('SELECT COUNT(*) FROM tokens where id = $1', [userId])
         if(result.rows[0].count != 0){
-            console.log(1)
             await db.query('UPDATE tokens SET refreshtoken = $1 WHERE id = $2', [refreshToken, userId])
         }
-        await db.query('INSERT INTO tokens (id, refreshToken) values($1, $2)', [userId, refreshToken])
+        else{
+            await db.query('INSERT INTO tokens (id, refreshToken) values($1, $2)', [userId, refreshToken])
+        }
+
 
     },
 

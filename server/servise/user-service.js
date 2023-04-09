@@ -29,7 +29,6 @@ const UserService ={
     },
 
     async activate(activateLink){
-        console.log('user-service')
         const link = await db.query('SELECT activatelink FROM person where activateLink = $1', [activateLink])
         if(link.rows.length == 0){
             throw ApiError.BadRequest('Некоректная ссылка активации')
@@ -39,7 +38,6 @@ const UserService ={
 
     async login(email, password){
         const user = await db.query('SELECT COUNT(*), id, email, password FROM person WHERE email = $1 GROUP BY id, email, password', [email])
-        console.log(user.rows[0])
         if(user.rows[0].count == 0){
             throw ApiError.BadRequest(`Пользователь с ${email} не зарегистрирован`)
         }
@@ -58,18 +56,24 @@ const UserService ={
     },
 
     async refresh(refreshToken){
+
         if(!refreshToken){
             throw ApiError.UnautorizedErrors()
         }
+
         const userData = tokenService.validateRefreshToken(refreshToken)
         const token = tokenService.findToken(refreshToken)
-        if(!!token ||  !userData){ // !!token - потому что findToken вернет 0 или 1 (0 - нет токена в БД, 1 - токен существует)
+        if(!!!token ||  !userData){ // !!token - потому что findToken вернет 0 или 1 (0 - нет токена в БД, 1 - токен существует)
             throw ApiError.UnautorizedErrors()
         }
-        const user = await db.query('SELECT COUNT(*), id, email FROM person WHERE email = $1 GROUP BY id, email', [email])
+        const user = await db.query('select p.id, p.email from person p\n' +
+            'join tokens t on t.id = p.id\n' +
+            'where t.refreshToken = $1', [refreshToken])
         const {id, email} = user.rows[0]
         const tokens = tokenService.generationToken({email})
         await tokenService.saveToken(id, tokens.refreshToken)
+
+
         return{...tokens}
     },
 
