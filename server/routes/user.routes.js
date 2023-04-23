@@ -1,6 +1,7 @@
 const Router = require('express')
 const router = new Router()
 const userController = require('../controllers/user.controller')
+const adController = require('../controllers/ad.controller')
 const {body} = require('express-validator')
 const authMiddlewares = require('../middlewares/auth-middleware')
 
@@ -14,6 +15,7 @@ router.post('/logout', userController.logout)
 router.get('/activate/:link', userController.activate)
 router.get('/refresh', userController.refresh)
 router.get('/users', authMiddlewares, userController.getUsers)
+router.post('/checking', adController.addItem)
 
 // router.post('/user', userController.createUser)
 // router.get('/user', userController.getAllUsers)

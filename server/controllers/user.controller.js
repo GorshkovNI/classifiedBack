@@ -3,16 +3,24 @@ const cookie = require('cookie')
 const userService = require('../servise/user-service')
 const {validationResult} = require('express-validator')
 const ApiError = require('../exceptions/api-errors')
+const User = require('../models/User/User')
+const Role = require('../models/User/Role')
+
 
 const UserController = {
     async registration(req, res, next){
         try{
+            // const user = new User()
+            // const role = new Role()
+            // await user.save()
+            // await role.save()
             const errors = validationResult(req)
             if(!errors.isEmpty()){
                 return next(ApiError.BadRequest('Ошибка при валидации', errors.array()))
             }
-            const {name, email, password} = req.body
-            const userData = await userService.registration(name, email, password);
+            const {name, email, phone, password} = req.body
+            const userData = await userService.registration(name, email, phone, password);
+            
             res.cookie('refreshToken', userData.refreshToken, {
                 maxAge: 30 * 24 * 60 * 60 * 1000,
                 httpOnly: true
@@ -61,6 +69,7 @@ const UserController = {
     async refresh(req, res, next){
         try{
             const {refreshToken} = req.cookies
+            console.log(refreshToken)
             const token = await userService.refresh(refreshToken)
             res.cookie('refreshToken', token.refreshToken, {
                 maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -82,8 +91,6 @@ const UserController = {
             next(e)
         }
     },
-
-
 
 }
 
