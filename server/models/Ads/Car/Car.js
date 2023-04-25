@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose')
+/*const { Schema, model } = require('mongoose')
 
 const Cars = new Schema({
     title: {type: String},
@@ -21,4 +21,4 @@ const Cars = new Schema({
     }
 })
 
-module.exports = model('Cars', Cars)
+module.exports = model('Cars', Cars)*/
