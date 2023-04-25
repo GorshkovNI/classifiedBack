@@ -1,6 +1,6 @@
 const ApiError = require('../exceptions/api-errors')
-const Ads = require('../models/Ads')
-const Cars = require('../models/Car/Car')
+const Ads = require('../models/Ads/Ads')
+const Cars = require('../models/Ads/Car/Car')
 
 const AdController = {
     async addItem(req, res, next) {
@@ -19,8 +19,7 @@ const AdController = {
                         color, wheel, vin, user})
                     
                     await car.save()
-
-                    res.json('Объяявление сохранено')
+                    res.json('Объявление сохранено')
             }
         }
         catch (e) {
