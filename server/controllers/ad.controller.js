@@ -40,6 +40,18 @@ const AdController = {
         }
     },
 
+    async getFieldsAd(req, res, next){
+        try {
+            const {category} = req.body
+            const fields = await TypeAd.findOne({category}, {fields: 1})
+            console.log(category)
+            console.log(fields)
+            res.send(fields)
+        }catch (e){
+            next(e)
+        }
+    },
+
     async createNewTypeAd(req, res, next){
         try {
             const {type} = req.body
