@@ -14,12 +14,16 @@ const AdController = {
                     const category_id = await TypeAd.findOne({category}, {_id: 1})
                     const { title, marka, model, year,
                         registrationnubmer, vin, color,
-                        mileage, owners, isCrash, photos, user_id} = req.body.data
+                        mileage, owners, isCrash, photos, description, price, user_id} = req.body.data
 
                     const carAds = new CarSchema({title, category, marka, model, year,
                         registrationnubmer, vin, color,
-                        mileage, owners, isCrash, photos, user_id, category_id})
+                        mileage, owners, isCrash, photos, description, price, user_id, category_id})
+
+                    const newAd = new Ads({title, description, price, photos, user_id})
+
                     await carAds.save()
+                    await newAd.save()
                     res.json('Объявление сохранено')
             }
         }

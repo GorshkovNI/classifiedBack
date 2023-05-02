@@ -40,6 +40,12 @@ const CarSchema = new Schema({
         required: true
     },
     photos: Array,
+    description:{
+        type: String
+    },
+    price:{
+        type: String
+    },
     user_id: {
         type: String,
         ref: 'User'
