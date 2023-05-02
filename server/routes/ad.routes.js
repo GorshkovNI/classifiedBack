@@ -7,5 +7,6 @@ router.post('/checking', adController.addItem)
 router.get('/getTypes', adController.sendType)
 router.post('/create-type-ad', adController.createNewTypeAd)
 router.post('/getFieldsType', adController.getFieldsAd)
+router.post('/addItem', adController.addItem)
 
 module.exports = router

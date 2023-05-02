@@ -1,26 +1,25 @@
 const ApiError = require('../exceptions/api-errors')
 const Ads = require('../models/Ads/Ads')
-const Cars = require('../models/Ads/Car/Car')
 const TypeAd = require('../models/TypeAd/TypeAd')
-const carInputs = require("../models/Ads/Car/carObjectField");
+const User = require("../models/User/User");
+const CarSchema = require('../models/Ads/Car/CarShema')
 
 const AdController = {
     async addItem(req, res, next) {
         try {
-            const { type } = req.body
-            switch (type) {
-                case 'auto':
-                    const { title, year, generation, mileage,
-                        owners, modification, engineCapacity,
-                        gearbox, drive, equipment, body,
-                        color, wheel, vin, user } = req.body
+            const { category } = req.body.data
+            console.log(category)
+            switch (category){
+                case 'car':
+                    const category_id = await TypeAd.findOne({category}, {_id: 1})
+                    const { title, marka, model, year,
+                        registrationnubmer, vin, color,
+                        mileage, owners, isCrash, photos, user_id} = req.body.data
 
-                    const car = new Cars({title, year, generation, mileage,
-                        owners, modification, engineCapacity,
-                        gearbox, drive, equipment, body,
-                        color, wheel, vin, user})
-                    
-                    await car.save()
+                    const carAds = new CarSchema({title, category, marka, model, year,
+                        registrationnubmer, vin, color,
+                        mileage, owners, isCrash, photos, user_id, category_id})
+                    await carAds.save()
                     res.json('Объявление сохранено')
             }
         }
