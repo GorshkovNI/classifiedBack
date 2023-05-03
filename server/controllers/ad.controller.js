@@ -3,34 +3,44 @@ const Ads = require('../models/Ads/Ads')
 const TypeAd = require('../models/TypeAd/TypeAd')
 const User = require("../models/User/User");
 const CarSchema = require('../models/Ads/Car/CarShema')
+const AdService = require("../servise/ad-service");
 
 const AdController = {
     async addItem(req, res, next) {
         try {
             const { category } = req.body.data
-            console.log(category)
             switch (category){
                 case 'car':
-                    const category_id = await TypeAd.findOne({category}, {_id: 1})
-                    const { title, marka, model, year,
-                        registrationnubmer, vin, color,
-                        mileage, owners, isCrash, photos, description, price, user_id} = req.body.data
+                    try {
+                        const { title, marka, model, year,
+                            registrationnubmer, vin, color,
+                            mileage, owners, isCrash, photos, description, price, user_id} = req.body.data
 
-                    const carAds = new CarSchema({title, category, marka, model, year,
-                        registrationnubmer, vin, color,
-                        mileage, owners, isCrash, photos, description, price, user_id, category_id})
+                        const newAd = await AdService.addItem(category, title, marka, model, year,
+                            registrationnubmer, vin, color,
+                            mileage, owners, isCrash, photos, description, price, user_id)
 
-                    const newAd = new Ads({title, description, price, photos, user_id})
-
-                    await carAds.save()
-                    await newAd.save()
-                    res.json('Объявление сохранено')
+                        res.json(newAd)
+                    } catch (e) {
+                        next(e)
+                    }
             }
         }
         catch (e) {
             next(e)
         }
 
+    },
+
+    async getAllAds(req, res, next){
+        try {
+            const {user_id} = req.body
+            console.log(user_id)
+            const ads = await Ads.find({user_id})
+            res.send(ads)
+        }catch (e){
+            next(e)
+        }
     },
 
     async sendType(req, res, next){
@@ -47,8 +57,6 @@ const AdController = {
         try {
             const {category} = req.body
             const fields = await TypeAd.findOne({category}, {fields: 1})
-            console.log(category)
-            console.log(fields)
             res.send(fields)
         }catch (e){
             next(e)
@@ -63,7 +71,6 @@ const AdController = {
                 throw 'Такая категория уже есть'
             }
             const newTypeAd = new TypeAd(req.body)
-            console.log(newTypeAd)
             await newTypeAd.save()
         } catch (e){
             next(e)

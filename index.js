@@ -3,6 +3,7 @@ const express = require('express')
 const mongose = require('mongoose')
 const userRouter = require('./server/routes/user.routes')
 const addRouter = require('./server/routes/ad.routes')
+const userProfile = require('./server/routes/userProfile.routes')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const errorMiddlewares = require('./server/middlewares/error-middlewares')
@@ -18,6 +19,7 @@ app.use(cors({
 }))
 app.use('/api', userRouter)
 app.use('/add-item', addRouter)
+app.use('/profile', userProfile)
 app.use(errorMiddlewares)
 
 const start = async () => {

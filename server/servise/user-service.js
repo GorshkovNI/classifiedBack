@@ -35,7 +35,6 @@ const UserService ={
        // const id = uuid.v4().replace(/-/g, '');
        // await db.query('INSERT INTO PERSON (ID, NAME, EMAIL, ISACTIVATED, ACTIVATELINK, PASSWORD) VALUES ( $1, $2, $3, $4, $5, $6)', [id, name, email, false, activationLink, password])
         //await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`)
-        console.log(user);
         const tokens = tokenService.generationToken({email})
         await tokenService.saveToken(user._id, tokens.refreshToken)
         return {...tokens, user:user}
@@ -46,7 +45,6 @@ const UserService ={
         if(link.rows.length == 0){
             throw ApiError.BadRequest('Некоректная ссылка активации')
         }
-        console.log(activateLink)
         await db.query('UPDATE person SET ISACTIVATED = true WHERE ACTIVATELINK = $1', [activateLink])
     },
 

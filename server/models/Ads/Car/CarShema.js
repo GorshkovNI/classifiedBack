@@ -50,6 +50,10 @@ const CarSchema = new Schema({
         type: String,
         ref: 'User'
     },
+    category_id:{
+        type: String,
+        ref: 'TypeAd'
+    }
 })
 
 module.exports = model('CarSchema', CarSchema)
