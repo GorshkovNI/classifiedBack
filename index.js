@@ -17,6 +17,9 @@ app.use(cors({
     credentials: true,
     origin: 'http://localhost:3000'
 }))
+app.get('/',  (req, res) => {
+    res.send('Это сервер приложения GetIt')
+})
 app.use('/api', userRouter)
 app.use('/add-item', addRouter)
 app.use('/profile', userProfile)

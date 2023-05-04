@@ -5,6 +5,7 @@ const adController = require('../controllers/ad.controller')
 const {body} = require('express-validator')
 const authMiddlewares = require('../middlewares/auth-middleware')
 
+
 router.post('/registration',
     body('email').isEmail(),
     body('password').isLength({min: 3, max: 8 }),
