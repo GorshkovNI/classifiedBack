@@ -78,7 +78,7 @@ const UserController = {
             return res.json(token)
         }
         catch (e){
-
+            next(e)
         }
     },
 
