@@ -63,6 +63,16 @@ const AdController = {
         }
     },
 
+    async getInfoAboutAd(req, res, next){
+        try {
+            const {id} = req.body
+            console.log('69 ---', )
+            const infoAd = await AdService.getAd(id)
+        } catch (e){
+
+        }
+    },
+
     async createNewTypeAd(req, res, next){
         try {
             const {type} = req.body

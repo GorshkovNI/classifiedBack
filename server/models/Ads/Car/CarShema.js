@@ -53,6 +53,10 @@ const CarSchema = new Schema({
     category_id:{
         type: String,
         ref: 'TypeAd'
+    },
+    ads_id:{
+        type: String,
+        ref: 'Ads'
     }
 })
 

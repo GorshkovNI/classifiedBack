@@ -10,4 +10,5 @@ router.post('/getFieldsType', adController.getFieldsAd)
 router.post('/addItem', adController.addItem)
 router.post('/profile', adController.getAllAds)
 
+
 module.exports = router

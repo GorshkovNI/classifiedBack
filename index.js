@@ -2,8 +2,9 @@ require('dotenv').config()
 const express = require('express')
 const mongose = require('mongoose')
 const userRouter = require('./server/routes/user.routes')
-const addRouter = require('./server/routes/ad.routes')
+const addRouter = require('./server/routes/createAd.routes')
 const userProfile = require('./server/routes/userProfile.routes')
+const getAd = require('./server/routes/getAd.routes')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const errorMiddlewares = require('./server/middlewares/error-middlewares')
@@ -23,6 +24,7 @@ app.get('/',  (req, res) => {
 app.use('/api', userRouter)
 app.use('/add-item', addRouter)
 app.use('/profile', userProfile)
+app.use('/ad', getAd)
 app.use(errorMiddlewares)
 
 const start = async () => {
