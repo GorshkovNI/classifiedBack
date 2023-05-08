@@ -55,7 +55,7 @@ const CarSchema = new Schema({
         ref: 'TypeAd'
     },
     ads_id:{
-        type: String,
+        type: Schema.Types.ObjectId,
         ref: 'Ads'
     }
 })

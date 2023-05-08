@@ -66,10 +66,10 @@ const AdController = {
     async getInfoAboutAd(req, res, next){
         try {
             const {id} = req.body
-            console.log('69 ---', )
             const infoAd = await AdService.getAd(id)
+            res.send(infoAd)
         } catch (e){
-
+            next(e)
         }
     },
 
@@ -85,7 +85,7 @@ const AdController = {
         } catch (e){
             next(e)
         }
-    }
+    },
 }
 
 module.exports = AdController

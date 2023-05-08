@@ -15,7 +15,7 @@ function generateUserId() {
 }
 
 const UserService ={
-    async registration(name, email, phone, password){
+    async registration(name, email, phone, password, dateRegistration){
         // const result = await db.query('SELECT COUNT(*) FROM person WHERE email = $1', [email])
         const result = await User.findOne({email})
         // if(result.rows[0].count != 0){
@@ -25,19 +25,27 @@ const UserService ={
         if(result){
             throw ApiError.BadRequest('Пользователь с таким email уже существует')
         }
-        
-        const hashPassword = bcrypt.hashSync(password, 7)
-        const userRole = await Role.findOne({value: "USER"})
-        const user = new User({name, email, phone, password: hashPassword, roles:[userRole.value]})
-        await user.save()
-        
-        //const activationLink = uuid.v4()
-       // const id = uuid.v4().replace(/-/g, '');
-       // await db.query('INSERT INTO PERSON (ID, NAME, EMAIL, ISACTIVATED, ACTIVATELINK, PASSWORD) VALUES ( $1, $2, $3, $4, $5, $6)', [id, name, email, false, activationLink, password])
-        //await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`)
-        const tokens = tokenService.generationToken({email})
-        await tokenService.saveToken(user._id, tokens.refreshToken)
-        return {...tokens, user:user}
+        try {
+            const hashPassword = bcrypt.hashSync(password, 7)
+            const userRole = await Role.findOne({value: "USER"})
+            const user = new User({name, email, phone, password: hashPassword, dateRegistration, roles:[userRole.value]})
+            console.log(user)
+            await user.save()
+            console.log('after save')
+            //const activationLink = uuid.v4()
+            // const id = uuid.v4().replace(/-/g, '');
+            // await db.query('INSERT INTO PERSON (ID, NAME, EMAIL, ISACTIVATED, ACTIVATELINK, PASSWORD) VALUES ( $1, $2, $3, $4, $5, $6)', [id, name, email, false, activationLink, password])
+            //await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`)
+            console.log('before')
+            const tokens = tokenService.generationToken({email})
+            console.log(tokens)
+            await tokenService.saveToken(user._id, tokens.refreshToken)
+            console.log("saveToken")
+            return {...tokens, user:user}
+        }catch (e){
+            console.log(e)
+        }
+
     },
 
     async activate(activateLink){
