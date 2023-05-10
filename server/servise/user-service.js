@@ -60,6 +60,7 @@ const UserService ={
         //const user = await db.query('SELECT COUNT(*), id, name, email, password FROM person WHERE email = $1 GROUP BY id, name, email, password', [email])
         const user = await User.findOne({email})
         if(!user){
+            console.log('User не найден!')
             throw ApiError.BadRequest(`Пользователь с ${email} не зарегистрирован`)
         }
         const isPassEquals = bcrypt.compare(password, user.password)

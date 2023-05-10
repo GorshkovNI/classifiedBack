@@ -6,7 +6,7 @@ const CarSchema = require('../models/Ads/Car/CarShema')
 const AdService = require("../servise/ad-service");
 
 const AdController = {
-    async addItem(req, res, next) {
+    async addItemCar(req, res, next) {
         try {
             const { category } = req.body.data
             switch (category){
@@ -16,7 +16,7 @@ const AdController = {
                             registrationnubmer, vin, color,
                             mileage, owners, isCrash, photos, description, price, user_id} = req.body.data
 
-                        const newAd = await AdService.addItem(category, title, marka, model, year,
+                        const newAd = await AdService.addItemCar(category, title, marka, model, year,
                             registrationnubmer, vin, color,
                             mileage, owners, isCrash, photos, description, price, user_id)
 

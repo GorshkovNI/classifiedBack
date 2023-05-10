@@ -8,7 +8,7 @@ const categoryTypes = {
 }
 
 const AdService = {
-    async addItem(category, title, marka, model, year, registrationnubmer, vin, color,
+    async addItemCar(category, title, marka, model, year, registrationnubmer, vin, color,
                   mileage, owners, isCrash, photos, description, price, user_id){
 
         const category_id = await TypeAd.findOne({category}, {_id: 1})
