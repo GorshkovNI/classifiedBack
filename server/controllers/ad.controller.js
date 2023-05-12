@@ -86,6 +86,23 @@ const AdController = {
             next(e)
         }
     },
+
+    async deleteAd(req, res, next){
+        try {
+            const {categoryId, ads_id} = req.body
+            console.log(categoryId, ' | ', ads_id)
+            const type = await TypeAd.findOne({_id: categoryId}, {category: 1})
+            console.log(type.category)
+            switch (type.category){
+                case 'car':
+                    await CarSchema.deleteOne({ads_id: ads_id})
+                    await Ads.deleteOne({_id: ads_id})
+                    res.json('ok')
+            }
+        }catch (e){
+            next(e)
+        }
+    }
 }
 
 module.exports = AdController

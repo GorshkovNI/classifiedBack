@@ -16,11 +16,10 @@ const AdService = {
         const newAd = new Ads({title, description, price, photos, user_id, categoryId: category_id})
         const carAds = new CarSchema({title, category, marka, model, year,
             registrationnubmer, vin, color,
-            mileage, owners, isCrash, photos, description, price, user_id, category_id, ads_id: newAd._id})
+            mileage, owners, isCrash, photos, description, price, user_id, category_id, ads_id: newAd['_id']})
 
         await newAd.save()
         await carAds.save()
-
         return true
     },
 

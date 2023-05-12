@@ -10,5 +10,7 @@ router.post('/getFieldsType', adController.getFieldsAd)
 router.post('/addItem', adController.addItemCar)
 router.post('/profile', adController.getAllAds)
 
+router.post('/deleteAd', adController.deleteAd)
+
 
 module.exports = router
