@@ -46,6 +46,9 @@ const CarSchema = new Schema({
     price:{
         type: String
     },
+    city:{
+        type: String
+    },
     user_id: {
         type: String,
         ref: 'User'

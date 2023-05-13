@@ -15,6 +15,9 @@ const Ads = new Schema({
         type: String,
         ref: 'User'
     },
+    city:{
+        type: String
+    },
     categoryId:{
         type: Schema.Types.ObjectId,
         ref: 'TypeAd'

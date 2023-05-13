@@ -14,12 +14,11 @@ const AdController = {
                     try {
                         const { title, marka, model, year,
                             registrationnubmer, vin, color,
-                            mileage, owners, isCrash, photos, description, price, user_id} = req.body.data
+                            mileage, owners, isCrash, photos, description, price, city, user_id} = req.body.data
 
                         const newAd = await AdService.addItemCar(category, title, marka, model, year,
                             registrationnubmer, vin, color,
-                            mileage, owners, isCrash, photos, description, price, user_id)
-
+                            mileage, owners, isCrash, photos, description, price, city, user_id)
                         res.json(newAd)
                     } catch (e) {
                         next(e)

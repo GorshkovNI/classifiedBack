@@ -16,7 +16,8 @@ app.use(express.urlencoded({limit: '50mb'}))
 app.use(cookieParser())
 app.use(cors({
     credentials: true,
-    origin: 'http://localhost:3000'
+    origin: 'http://localhost:3000',
+    exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar']
 }))
 app.get('/',  (req, res) => {
     res.send('Это сервер приложения GetIt')
@@ -26,6 +27,7 @@ app.use('/add-item', addRouter)
 app.use('/profile', userProfile)
 app.use('/ad', getAd)
 app.use(errorMiddlewares)
+
 
 const start = async () => {
     try{
