@@ -15,9 +15,9 @@ app.use(express.json({limit: '50mb'}))
 app.use(express.urlencoded({limit: '50mb'}))
 app.use(cookieParser())
 app.use(cors({
-    credentials: true,
     origin: 'https://getit-khaki.vercel.app',
     //origin: 'http://localhost:3000',
+    credentials: true,
     exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar']
 }))
 app.get('/',  (req, res) => {
