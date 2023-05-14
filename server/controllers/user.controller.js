@@ -24,7 +24,8 @@ const UserController = {
             res.cookie('refreshToken', userData.refreshToken, {
                 maxAge: 30 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
-                domain: 'https://getit-khaki.vercel.app'
+                domain: 'https://getit-khaki.vercel.app',
+                sameSite: 'none',
             })
             console.log(userData)
             return res.json(userData)
@@ -41,7 +42,8 @@ const UserController = {
             res.cookie('refreshToken', userData.refreshToken, {
                 maxAge: 30 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
-                domain: 'https://getit-khaki.vercel.app'
+                domain: 'https://getit-khaki.vercel.app',
+                sameSite: 'none',
             })
             return res.json(userData)
         }
@@ -78,7 +80,8 @@ const UserController = {
             res.cookie('refreshToken', token.refreshToken, {
                 maxAge: 30 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
-                domain: 'https://getit-khaki.vercel.app'
+                domain: 'https://getit-khaki.vercel.app',
+                sameSite: 'none',
             })
             return res.json(token)
         }
