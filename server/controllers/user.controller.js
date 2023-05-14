@@ -25,7 +25,7 @@ const UserController = {
                 maxAge: 30 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
                 domain: 'https://getit-khaki.vercel.app',
-                sameSite: 'none',
+                secure: true,
             })
             console.log(userData)
             return res.json(userData)
@@ -43,7 +43,7 @@ const UserController = {
                 maxAge: 30 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
                 domain: 'https://getit-khaki.vercel.app',
-                sameSite: 'none',
+                secure: true,
             })
             return res.json(userData)
         }
@@ -81,7 +81,7 @@ const UserController = {
                 maxAge: 30 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
                 domain: 'https://getit-khaki.vercel.app',
-                sameSite: 'none',
+                secure: true,
             })
             return res.json(token)
         }
