@@ -26,6 +26,7 @@ const UserController = {
                 httpOnly: true,
                 domain: 'https://getit-khaki.vercel.app',
                 secure: true,
+                path: '/'
             })
             console.log(userData)
             return res.json(userData)
@@ -44,6 +45,7 @@ const UserController = {
                 httpOnly: true,
                 domain: 'https://getit-khaki.vercel.app',
                 secure: true,
+                path: '/'
             })
             return res.json(userData)
         }
@@ -82,6 +84,7 @@ const UserController = {
                 httpOnly: true,
                 domain: 'https://getit-khaki.vercel.app',
                 secure: true,
+                path: '/'
             })
             return res.json(token)
         }
