@@ -21,13 +21,13 @@ const UserController = {
             const {name, email, phone, password, dateRegistration} = req.body
             const userData = await userService.registration(name, email, phone, password, dateRegistration);
             
-            res.cookie('refreshToken', userData.refreshToken, {
-                maxAge: 30 * 24 * 60 * 60 * 1000,
-                httpOnly: true,
-                domain: 'getit-khaki.vercel.app',
-                secure: true,
-                path: '/'
-            })
+            // res.cookie('refreshToken', userData.refreshToken, {
+            //     maxAge: 30 * 24 * 60 * 60 * 1000,
+            //     httpOnly: true,
+            //     domain: 'getit-khaki.vercel.app',
+            //     secure: true,
+            //     path: '/'
+            // })
             console.log(userData)
             return res.json(userData)
         }
@@ -40,13 +40,13 @@ const UserController = {
             const {email, password} = req.body
             const userData = await userService.login(email, password)
             console.log('userdata',userData)
-            res.cookie('refreshToken', userData.refreshToken, {
-                maxAge: 30 * 24 * 60 * 60 * 1000,
-                httpOnly: true,
-                domain: 'getit-khaki.vercel.app',
-                secure: true,
-                path: '/'
-            })
+            // res.cookie('refreshToken', userData.refreshToken, {
+            //     maxAge: 30 * 24 * 60 * 60 * 1000,
+            //     httpOnly: true,
+            //     domain: 'getit-khaki.vercel.app',
+            //     secure: true,
+            //     path: '/'
+            // })
             return res.json(userData)
         }
         catch (e){
@@ -76,17 +76,16 @@ const UserController = {
     },
     async refresh(req, res, next){
         try{
-            const {refreshToken} = req.cookies
-            console.log('From Cookie: ', refreshToken)
-            const token = await userService.refresh(refreshToken)
-            res.cookie('refreshToken', token.refreshToken, {
-                maxAge: 30 * 24 * 60 * 60 * 1000,
-                httpOnly: true,
-                domain: 'getit-khaki.vercel.app',
-                secure: true,
-                path: '/'
-            })
-            return res.json(token)
+            const {token} = req.body
+            const refreshToken = await userService.refresh(token)
+            // res.cookie('refreshToken', token.refreshToken, {
+            //     maxAge: 30 * 24 * 60 * 60 * 1000,
+            //     httpOnly: true,
+            //     domain: 'getit-khaki.vercel.app',
+            //     secure: true,
+            //     path: '/'
+            // })
+            return res.json(refreshToken)
         }
         catch (e){
             next(e)
