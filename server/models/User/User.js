@@ -6,6 +6,8 @@ const User = new Schema({
     phone: {type: String, unique: true},
     password: {type: String},
     dateRegistration: {type: Number},
+    activateLink: {type: String},
+    isActivate: {type: Boolean},
     roles: [{type: String, ref: 'Role'}]
     
 })

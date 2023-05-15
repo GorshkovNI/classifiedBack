@@ -16,31 +16,24 @@ function generateUserId() {
 
 const UserService ={
     async registration(name, email, phone, password, dateRegistration){
-        // const result = await db.query('SELECT COUNT(*) FROM person WHERE email = $1', [email])
         const result = await User.findOne({email})
-        // if(result.rows[0].count != 0){
-        //     throw ApiError.BadRequest('Пользователь с таким email уже существует')
-        // }
-
-        if(result){
+        if(result?.isActivate === true){
             throw ApiError.BadRequest('Пользователь с таким email уже существует')
         }
         try {
             const hashPassword = bcrypt.hashSync(password, 7)
             const userRole = await Role.findOne({value: "USER"})
-            const user = new User({name, email, phone, password: hashPassword, dateRegistration, roles:[userRole.value]})
-            console.log(user)
+            const user = new User({name, email, phone, password: hashPassword, dateRegistration, isActivate: false ,roles:[userRole.value]})
             await user.save()
             console.log('after save')
-            //const activationLink = uuid.v4()
+            const activationLink = uuid.v4()
             // const id = uuid.v4().replace(/-/g, '');
             // await db.query('INSERT INTO PERSON (ID, NAME, EMAIL, ISACTIVATED, ACTIVATELINK, PASSWORD) VALUES ( $1, $2, $3, $4, $5, $6)', [id, name, email, false, activationLink, password])
-            //await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`)
-            console.log('before')
+            await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`)
+            await User.updateOne({_id: user['_id']}, {$set: {activateLink: `${activationLink}`}})
+            //user.activateLink = `${activationLink}`
             const tokens = tokenService.generationToken({email})
-            console.log(tokens)
             await tokenService.saveToken(user._id, tokens.refreshToken)
-            console.log("saveToken")
             return {...tokens, user:user}
         }catch (e){
             console.log(e)
@@ -49,11 +42,13 @@ const UserService ={
     },
 
     async activate(activateLink){
-        const link = await db.query('SELECT activatelink FROM person where activateLink = $1', [activateLink])
-        if(link.rows.length == 0){
+        const user = await User.findOne({activateLink: activateLink})
+        console.log('activateLink ', user)
+        if(!user){
             throw ApiError.BadRequest('Некоректная ссылка активации')
         }
-        await db.query('UPDATE person SET ISACTIVATED = true WHERE ACTIVATELINK = $1', [activateLink])
+        await User.updateOne({_id: user['_id']}, {$set: {isActivate: true}})
+        await user.save()
     },
 
     async login(email, password){

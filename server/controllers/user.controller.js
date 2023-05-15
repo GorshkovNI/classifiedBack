@@ -28,7 +28,6 @@ const UserController = {
             //     secure: true,
             //     path: '/'
             // })
-            console.log(userData)
             return res.json(userData)
         }
         catch (e){
@@ -66,14 +65,17 @@ const UserController = {
     },
     async activate(req, res, next){
         try{
+            console.log(req.params.link)
             const activationLink = req.params.link
             await userService.activate(activationLink)
             return res.redirect(process.env.CLIENT_URL)
         }
         catch (e){
+            console.log(e)
             next(e)
         }
     },
+
     async refresh(req, res, next){
         try{
             const {token} = req.body
