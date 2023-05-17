@@ -15,7 +15,7 @@ function generateUserId() {
 }
 
 const UserService ={
-    async registration(name, email, phone, password, dateRegistration){
+    async registration(name, email, phone, password, dateRegistration, photo=''){
         const result = await User.findOne({email})
         if(result?.isActivate === true){
             throw ApiError.BadRequest('Пользователь с таким email уже существует')
@@ -23,7 +23,7 @@ const UserService ={
         try {
             const hashPassword = bcrypt.hashSync(password, 7)
             const userRole = await Role.findOne({value: "USER"})
-            const user = new User({name, email, phone, password: hashPassword, dateRegistration, isActivate: false ,roles:[userRole.value]})
+            const user = new User({name, email, phone, password: hashPassword, dateRegistration, photo, isActivate: false ,roles:[userRole.value]})
             await user.save()
             console.log('after save')
             const activationLink = uuid.v4()

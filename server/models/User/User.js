@@ -8,6 +8,7 @@ const User = new Schema({
     dateRegistration: {type: Number},
     activateLink: {type: String},
     isActivate: {type: Boolean},
+    photo:{type: String},
     roles: [{type: String, ref: 'Role'}]
     
 })

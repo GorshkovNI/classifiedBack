@@ -4,9 +4,10 @@ const TypeAd = require('../models/TypeAd/TypeAd')
 const User = require("../models/User/User");
 const CarSchema = require('../models/Ads/Car/CarShema')
 const AdService = require("../servise/ad-service");
+const RentShema = require("../models/Ads/Rent/Rent")
 
 const AdController = {
-    async addItemCar(req, res, next) {
+    async addItem(req, res, next) {
         try {
             const { category } = req.body.data
             switch (category){
@@ -23,6 +24,18 @@ const AdController = {
                     } catch (e) {
                         next(e)
                     }
+                    break;
+                case 'rent':
+
+                    try {
+                        const  {title, city, rooms, square, squareKitchen, floor, totalFloor, bathroom,  photos,description, price, category, user_id} = req.body.data
+                        console.log(req.body.data)
+                        const newAd = await AdService.addItemRent(req.body.data)
+                        res.json(newAd)
+                    }catch (e) {
+                        next(e);
+                    }
+                    break;
             }
         }
         catch (e) {
@@ -74,8 +87,8 @@ const AdController = {
 
     async createNewTypeAd(req, res, next){
         try {
-            const {type} = req.body
-            const isExist = await TypeAd.findOne({type})
+            const {category} = req.body
+            const isExist = await TypeAd.findOne({category})
             if(isExist){
                 throw 'Такая категория уже есть'
             }
@@ -89,7 +102,6 @@ const AdController = {
     async deleteAd(req, res, next){
         try {
             const {categoryId, ads_id} = req.body
-            console.log(categoryId, ' | ', ads_id)
             const type = await TypeAd.findOne({_id: categoryId}, {category: 1})
             console.log(type.category)
             switch (type.category){
@@ -97,8 +109,24 @@ const AdController = {
                     await CarSchema.deleteOne({ads_id: ads_id})
                     await Ads.deleteOne({_id: ads_id})
                     res.json('ok')
+                break
+                case 'rent':
+                    await RentShema.deleteOne({ads_id: ads_id})
+                    await Ads.deleteOne({_id: ads_id})
+                    res.json('ok')
             }
         }catch (e){
+            next(e)
+        }
+    },
+
+    async changeAvatar(req, res, next){
+        try {
+            const {avatar, user_id} = req.body
+            const user = await User.findOne({_id: user_id})
+            await user.updateOne({$set: {photo: avatar}})
+            res.send(true)
+        }catch (e) {
             next(e)
         }
     }
