@@ -1,6 +1,7 @@
 const db = require('../database/database')
 const cookie = require('cookie')
 const userService = require('../servise/user-service')
+const mailservice = require('../servise/mail-service')
 const {validationResult} = require('express-validator')
 const ApiError = require('../exceptions/api-errors')
 const User = require('../models/User/User')
@@ -102,8 +103,7 @@ const UserController = {
         catch (e){
             next(e)
         }
-    },
-
+    }
 }
 
 module.exports = UserController
