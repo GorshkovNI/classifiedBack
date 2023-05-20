@@ -28,7 +28,7 @@ app.use('/api', userRouter)
 app.use('/add-item', addRouter)
 app.use('/profile', userProfile)
 app.use('/ad', getAd)
-app.user('/feedback', feedbackRouter)
+app.use('/feedback', feedbackRouter)
 app.use(errorMiddlewares)
 
 

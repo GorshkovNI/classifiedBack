@@ -14,8 +14,8 @@ const AdService = {
                   mileage, owners, isCrash, photos, description, price, city, user_id){
 
         const category_id = await TypeAd.findOne({category}, {_id: 1})
-
-        const newAd = new Ads({title, description, price, photos, user_id, city, categoryId: category_id})
+        const tags = title.split(' ')
+        const newAd = new Ads({title, description, price, photos, user_id,  city, tags, categoryId: category_id})
         const carAds = new CarSchema({title, category, marka, model, year,
             registrationnubmer, vin, color,
             mileage, owners, isCrash, photos, description, price, city, user_id, category_id, ads_id: newAd['_id']})
@@ -33,7 +33,6 @@ const AdService = {
         } = data
 
         const category_id = await TypeAd.findOne({category}, {_id: 1})
-
         const newAd = new Ads( {title, description, price, photos, user_id, city, categoryId: category_id} )
         const rentAds = new RentSchema({title, city, rooms, square, squareKitchen, floor, totalFloor,
             bathroom, photos, description, price, user_id, category, category_id, ads_id: newAd['_id']})

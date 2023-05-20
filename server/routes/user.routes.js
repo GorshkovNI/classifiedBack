@@ -19,7 +19,6 @@ router.post('/refresh', userController.refresh)
 router.get('/users', authMiddlewares, userController.getUsers)
 router.post('/checking', adController.addItem)
 router.post('/changeAvatar', adController.changeAvatar)
-router.post('/feedback', userController.feedback)
 
 // router.post('/user', userController.createUser)
 // router.get('/user', userController.getAllUsers)
