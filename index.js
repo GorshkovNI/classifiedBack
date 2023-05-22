@@ -6,9 +6,11 @@ const addRouter = require('./server/routes/createAd.routes')
 const userProfile = require('./server/routes/userProfile.routes')
 const getAd = require('./server/routes/getAd.routes')
 const feedbackRouter = require('./server/routes/feedback.routes')
+const searchRouter = require('./server/routes/search.routes')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const errorMiddlewares = require('./server/middlewares/error-middlewares')
+const Ads = require("./server/models/Ads/Ads");
 const PORT = process.env.PORT
 
 const app = express()
@@ -29,6 +31,7 @@ app.use('/add-item', addRouter)
 app.use('/profile', userProfile)
 app.use('/ad', getAd)
 app.use('/feedback', feedbackRouter)
+app.use('/search', searchRouter)
 app.use(errorMiddlewares)
 
 

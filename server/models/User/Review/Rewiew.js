@@ -6,10 +6,10 @@ const Review = new Schema({
         ref: 'User'
     },
     count: {
-        type: String
+        type: Number
     },
     totalRating:{
-        type: String
+        type: Number
     },
     review: {
         type: Array
