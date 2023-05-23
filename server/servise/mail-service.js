@@ -32,15 +32,13 @@ class MailService {
     async feedback(topic, email, text){
         await this.transporter.sendMail({
             from: process.env.SMTP_USER,
-            to: process.env.SMTP_USER,
+            to: 'nigorshkov99@gmail.com',
             subject: topic,
             text: '',
             html:
                 `
                 <div>
-                    <div>Сообщение от пользователя.</div>
-                    <h3>${text}</h3>
-                    <div>Email: ${email}</div>
+                    <h1>Сообщение от пользователя</h1>
                 </div>
                 `
         })

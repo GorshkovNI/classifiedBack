@@ -24,6 +24,28 @@ const SearchController = {
         }catch (e){
             next(e)
         }
+    },
+
+    async searchByCity(req, res, next){
+        try {
+            const {city} = req.body
+            const result = await Ads.aggregate([
+                {
+                    $search: {
+                        index: "searchByCity",
+                        text: {
+                            query: city,
+                            path: {
+                                wildcard: "*"
+                            }
+                        }
+                    }
+                }
+            ])
+            res.json(result)
+        }catch (e){
+            next(e)
+        }
     }
 
 }
