@@ -21,7 +21,7 @@ app.use(cors({
     origin: ['https://getit-khaki.vercel.app', 'https://www.getit.market'],
     //origin: 'http://localhost:3000',
     credentials: true,
-    //exposedHeaders: ['set-cookie', 'Content-Length', 'X-Foo', 'X-Bar']
+    exposedHeaders: ['set-cookie', 'Content-Length', 'X-Foo', 'X-Bar']
 }))
 app.get('/',  (req, res) => {
     res.send('Это сервер приложения GetIt')
