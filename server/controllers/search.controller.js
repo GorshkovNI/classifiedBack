@@ -56,6 +56,7 @@ const SearchController = {
             const ads = await CarShema.find({city: {'$regex': city}})
             res.json(ads)
         }catch(e){
+
             next(e)
         }
     }
