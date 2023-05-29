@@ -3,6 +3,7 @@ const CarSchema = require("../models/Ads/Car/CarShema");
 const RentSchema = require("../models/Ads/Rent/Rent")
 const Ads = require("../models/Ads/Ads");
 const User = require("../models/User/User");
+const Review = require("../models/User/Review/Rewiew")
 
 const categoryTypes = {
     'car': CarSchema,
@@ -50,7 +51,8 @@ const AdService = {
         const currentAd = await categoryTypes[categoryName.category].findOne({ads_id: id})
         const userId = currentAd.user_id
         const user = await User.findOne({_id: userId})
-        return {currentAd, user, categoryName}
+        const review = await Review.findOne({user_id: userId})
+        return {currentAd, user, categoryName, review}
     }
 
 }

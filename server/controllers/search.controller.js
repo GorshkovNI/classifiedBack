@@ -1,5 +1,6 @@
 const Ads = require('../models/Ads/Ads')
 const CarShema = require('../models/Ads/Car/CarShema')
+const RentSchema = require('../models/Ads/Rent/Rent')
 const TypeAd = require('../models/TypeAd/TypeAd')
 
 const SearchController = {
@@ -57,6 +58,16 @@ const SearchController = {
             res.json(ads)
         }catch(e){
 
+            next(e)
+        }
+    },
+
+    async rent(req, res, next){
+        try {
+            const city = req.body.city
+            const ads = await RentSchema.find({city: {'$regex': city}})
+            res.json(ads)
+        }catch (e){
             next(e)
         }
     }
