@@ -1,6 +1,7 @@
 const Ads = require('../models/Ads/Ads')
 const CarShema = require('../models/Ads/Car/CarShema')
 const RentSchema = require('../models/Ads/Rent/Rent')
+const WorkSchema = require('../models/Ads/Work/Work')
 const TypeAd = require('../models/TypeAd/TypeAd')
 
 const SearchController = {
@@ -70,7 +71,18 @@ const SearchController = {
         }catch (e){
             next(e)
         }
-    }
+    },
+
+    async work(req, res, next){
+        try {
+            const city = req.body.city
+            const ads = await WorkSchema.find({city: {'$regex': city}})
+            res.json(ads)
+        }catch (e){
+            next(e)
+        }
+    },
+
 
 }
 

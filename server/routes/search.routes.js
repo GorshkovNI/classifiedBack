@@ -7,6 +7,7 @@ router.post('/', searchController.search)
 router.post('/adsByCity', searchController.searchByCity)
 router.post('/transport', searchController.transport)
 router.post('/rent', searchController.rent)
+router.post('/work', searchController.work)
 
 
 module.exports = router

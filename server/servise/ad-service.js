@@ -4,10 +4,12 @@ const RentSchema = require("../models/Ads/Rent/Rent")
 const Ads = require("../models/Ads/Ads");
 const User = require("../models/User/User");
 const Review = require("../models/User/Review/Rewiew")
+const WorkShema = require("../models/Ads/Work/Work")
 
 const categoryTypes = {
     'car': CarSchema,
-    'rent': RentSchema
+    'rent': RentSchema,
+    'work': WorkShema
 }
 
 const AdService = {
@@ -33,14 +35,30 @@ const AdService = {
             city, rooms, square, squareKitchen, floor, totalFloor, bathroom, photos, description, price, user_id, category
         } = data
 
-        const category_id = await TypeAd.findOne({category}, {_id: 1})
-        const newAd = new Ads( {title, description, price, photos, user_id, city, categoryId: category_id} )
-        const rentAds = new RentSchema({title, city, rooms, square, squareKitchen, floor, totalFloor,
-            bathroom, photos, description, price, user_id, category, category_id, ads_id: newAd['_id']})
+            const category_id = await TypeAd.findOne({category}, {_id: 1})
+            const newAd = new Ads( {title, description, price, photos, user_id, city, categoryId: category_id} )
+            const rentAds = new RentSchema({title, city, rooms, square, squareKitchen, floor, totalFloor,
+                bathroom, photos, description, price, user_id, category, category_id, ads_id: newAd['_id']})
 
         await newAd.save()
         await rentAds.save()
 
+
+        return true
+    },
+
+    async addItemWork(data){
+        const {
+            title, city, description, price, photos, name, typeWork, exrepiens, category, user_id
+        } = data
+
+        const category_id = await TypeAd.findOne({category}, {_id: 1})
+        const newAd = new Ads( {title, description, price, photos, user_id, city, categoryId: category_id} )
+        const workAds = new WorkShema({title, city, name, typeWork, exrepiens,
+            photos, description, price, user_id, category, category_id, ads_id: newAd['_id']})
+
+        await newAd.save()
+        await workAds.save()
 
         return true
     },

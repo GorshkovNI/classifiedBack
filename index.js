@@ -29,7 +29,7 @@ app.get('/',  (req, res) => {
 app.use('/api', userRouter)
 app.use('/add-item', addRouter)
 app.use('/profile', userProfile)
-app.use('/ad', getAd)
+app.use('/item', getAd)
 app.use('/feedback', feedbackRouter)
 app.use('/search', searchRouter)
 app.use(errorMiddlewares)

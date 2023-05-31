@@ -5,6 +5,7 @@ const User = require("../models/User/User");
 const CarSchema = require('../models/Ads/Car/CarShema')
 const AdService = require("../servise/ad-service");
 const RentShema = require("../models/Ads/Rent/Rent")
+const WorkShema = require("../models/Ads/Work/Work")
 
 const AdController = {
     async addItem(req, res, next) {
@@ -36,7 +37,16 @@ const AdController = {
                         next(e);
                     }
                     break;
+                case 'work':
+                    try {
+                        const newAd = await AdService.addItemWork(req.body.data)
+                        res.json(newAd)
+                    }catch (e){
+                        next(e);
+                    }
+                    break;
             }
+
         }
         catch (e) {
             next(e)
@@ -114,6 +124,11 @@ const AdController = {
                     await RentShema.deleteOne({ads_id: ads_id})
                     await Ads.deleteOne({_id: ads_id})
                     res.json('ok')
+                case 'work':
+                    await WorkShema.deleteOne({ads_id: ads_id})
+                    await Ads.deleteOne({_id: ads_id})
+                    res.json('ok')
+                    break
             }
         }catch (e){
             next(e)
