@@ -18,10 +18,10 @@ const AdService = {
 
         const category_id = await TypeAd.findOne({category}, {_id: 1})
         const tags = title.split(' ')
-        const newAd = new Ads({title, description, price, photos, user_id,  city, tags, categoryId: category_id})
+        const newAd = new Ads({title, description, price, photos, user_id,  city, up: false, tags, categoryId: category_id})
         const carAds = new CarSchema({title, category, marka, model, year,
             registrationnubmer, vin, color,
-            mileage, owners, isCrash, photos, description, price, city, user_id, category_id, ads_id: newAd['_id']})
+            mileage, owners, isCrash, photos, description, price, city, up: false, user_id, category_id, ads_id: newAd['_id']})
 
         await newAd.save()
         await carAds.save()

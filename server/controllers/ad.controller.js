@@ -6,6 +6,14 @@ const CarSchema = require('../models/Ads/Car/CarShema')
 const AdService = require("../servise/ad-service");
 const RentShema = require("../models/Ads/Rent/Rent")
 const WorkShema = require("../models/Ads/Work/Work")
+const RentSchema = require("../models/Ads/Rent/Rent");
+
+const categoryTypes = {
+    'car': CarSchema,
+    'rent': RentSchema,
+    'work': WorkShema
+}
+
 
 const AdController = {
     async addItem(req, res, next) {
@@ -91,6 +99,31 @@ const AdController = {
             const infoAd = await AdService.getAd(id)
             res.send(infoAd)
         } catch (e){
+            next(e)
+        }
+    },
+
+    async upAd(req, res, next){
+        try {
+            const ad_id = req.params.id
+            const categoryId = req.body.categoryId
+            const category = await TypeAd.findOne({_id: categoryId}, {category: 1})
+            await categoryTypes[category.category].updateOne({ads_id: ad_id}, {$set: {up: true}})
+            await Ads.updateOne({_id: ad_id}, {$set: {up: true}})
+            //await foundReview.updateOne({$set: {count: foundReview.count + 1, totalRating: foundReview.totalRating + newReview.review.rating}})
+        }catch (e){
+            next(e)
+        }
+    },
+    async removeUp(req, res, next){
+        try {
+            const ad_id = req.params.id
+            const categoryId = req.body.categoryId
+            const category = await TypeAd.findOne({_id: categoryId}, {category: 1})
+            await categoryTypes[category.category].updateOne({ads_id: ad_id}, {$set: {up: false}})
+            await Ads.updateOne({_id: ad_id}, {$set: {up: false}})
+            //await foundReview.updateOne({$set: {count: foundReview.count + 1, totalRating: foundReview.totalRating + newReview.review.rating}})
+        }catch (e){
             next(e)
         }
     },

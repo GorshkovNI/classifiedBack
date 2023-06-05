@@ -49,6 +49,9 @@ const CarSchema = new Schema({
     city:{
         type: String
     },
+    up:{
+        type: Boolean
+    },
     user_id: {
         type: String,
         ref: 'User'

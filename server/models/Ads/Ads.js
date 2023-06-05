@@ -18,6 +18,9 @@ const Ads = new Schema({
     city:{
         type: String
     },
+    up:{
+      type:Boolean
+    },
     tags: Array,
     categoryId:{
         type: Schema.Types.ObjectId,
